@@ -1,5 +1,4 @@
 import asyncio
-from textwrap import dedent
 from agno.team.team import Team
 from agno.models.deepseek import DeepSeek
 from typing import Literal, Optional
@@ -85,12 +84,12 @@ async def run_complete_analysis(company_symbol: str, mode:Literal["run", "print"
             message=f"Conduct comprehensive investment analysis for {company_symbol}. Each analyst should provide their specialized insights, and the Senior Investment Decision Maker should synthesize all findings to make the final BUY/HOLD/SELL recommendation with specific price targets, risk management, and confidence level.",
         )
         return response
-    elif mode == "print":
+    if mode == "print":
         await complete_team.aprint_response(
             message=f"Conduct comprehensive investment analysis for {company_symbol}. Each analyst should provide their specialized insights, and the Senior Investment Decision Maker should synthesize all findings to make the final BUY/HOLD/SELL recommendation with specific price targets, risk management, and confidence level.",
         )
-    else:
-        raise ValueError(f"Invalid mode: {mode}")
+        return None
+    raise ValueError(f"Invalid mode: {mode}")
 
 if __name__ == "__main__":
     asyncio.run(run_complete_analysis("AAPL"))
